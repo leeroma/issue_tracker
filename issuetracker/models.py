@@ -1,6 +1,6 @@
 from django.db import models
 
-from issuetracker.form_validators import StatusValidator
+from issuetracker.form_validators import StatusValidator, validate_language, check_len
 
 
 class Status(models.Model):
@@ -22,8 +22,9 @@ class Type(models.Model):
 
 
 class Issue(models.Model):
-    summary = models.CharField('Заголовок', max_length=100, null=False, blank=False)
-    description = models.TextField('Описание', max_length=3000, null=True, blank=True)
+    summary = models.CharField('Заголовок', max_length=100, null=False, blank=False,
+                               validators=[validate_language, check_len, ])
+    description = models.TextField('Описание', max_length=3000, null=True, blank=True, validators=[validate_language, ])
     status = models.ForeignKey(Status, on_delete=models.PROTECT, related_name='status', verbose_name='Статус')
     type = models.ForeignKey(Type, on_delete=models.PROTECT, related_name='type', verbose_name='Тип')
 

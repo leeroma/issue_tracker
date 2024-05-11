@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.core.validators import BaseValidator
 from django.utils.deconstruct import deconstructible
 
@@ -13,3 +14,13 @@ class StatusValidator(BaseValidator):
                 return True
 
         return False
+
+
+def validate_language(string):
+    if not string.isascii():
+        raise ValidationError('This field must be in English')
+
+
+def check_len(string):
+    if len(string.split()) == 1:
+        raise ValidationError('Must contain at least two words')
