@@ -1,5 +1,7 @@
 from django.urls import path
 
-urlpatterns = [
+from issuetracker.views import IssueListView
 
+urlpatterns = [
+    path('', IssueListView.as_view(), name='issues'),
 ]

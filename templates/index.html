@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block title %}Issues{% endblock %}
+
+{% block content %}
+    {% for issue in issues %}
+    <h1>{{ issue.summary }}</h1>
+    {% endfor %}
+{% endblock %}
