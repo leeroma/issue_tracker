@@ -2,6 +2,11 @@
 {% block title %}Issues{% endblock %}
 
 {% block content %}
+    <br>
+    {% if not issues %}
+        <h1> You haven't added any issue yet. Click on this button to add</h1>
+        <a href="{% url 'create_issue' %}" class="btn btn-success">Add Issue</a>
+    {% endif %}
     {% for issue in issues %}
     <h1>{{ issue.summary }}</h1>
     {% endfor %}

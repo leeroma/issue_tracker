@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+{% load bootstrap5 %}
 {% block title %}Add Issue{% endblock %}
 
 {% block content %}
     <br>
-    <form action="#" method="post" class="form">
+    <form action="{% url 'create_issue' %}" method="post" class="form">
         {% csrf_token %}
         {% bootstrap_form form %}
         {% buttons %}

@@ -461,6 +461,34 @@
     }
 },
 {
+    "model": "issuetracker.status",
+    "pk": 1,
+    "fields": {
+        "name": "Новое"
+    }
+},
+{
+    "model": "issuetracker.status",
+    "pk": 2,
+    "fields": {
+        "name": "Принято"
+    }
+},
+{
+    "model": "issuetracker.status",
+    "pk": 3,
+    "fields": {
+        "name": "В процессе"
+    }
+},
+{
+    "model": "issuetracker.status",
+    "pk": 4,
+    "fields": {
+        "name": "Готово"
+    }
+},
+{
     "model": "issuetracker.type",
     "pk": 1,
     "fields": {
