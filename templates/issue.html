@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Issue {{ issue.pk }}{% endblock %}
+
+{% block content %}
+    <div class="card text-center">
+        <div class="card-header">
+            Issue #{{ issue.pk }}
+        </div>
+        <div class="card-body">
+            <h4 class="card-title">{{ issue.summary }}</h4>
+            <h5 class="card-text">{{ issue.description }}</h5>
+        </div>
+        <p class="card-text">Type: {{ issue.type }}</p>
+        <p class="card-text">Status: {{ issue.status }}</p>
+        <div class="card-footer">
+            <small class="text-body-secondary">Last updated: {{ issue.updated_at }}</small>
+        </div>
+    </div>
+    <br>
+    <div class="d-flex justify-content-evenly">
+        <a href="{% url 'issues' %}" class="btn btn-success">Return</a>
+        <a class="btn btn-danger">Delete</a>
+    </div>
+{% endblock %}

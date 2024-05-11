@@ -8,6 +8,24 @@
         <a href="{% url 'create_issue' %}" class="btn btn-success">Add Issue</a>
     {% endif %}
     {% for issue in issues %}
-    <h1>{{ issue.summary }}</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Summary</th>
+                <th scope="col">Type</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row"><a href="{% url 'issue' issue.pk %}">{{ issue.pk }}</a></th>
+                <td>{{ issue.summary }}</td>
+                <td>{{ issue.type }}</td>
+                <td>{{ issue.status }}</td>
+            </tr>
+            <tr>
+            </tbody>
+        </table>
     {% endfor %}
 {% endblock %}
