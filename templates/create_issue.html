@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Add Issue{% endblock %}
+
+{% block content %}
+    <br>
+    <form action="#" method="post" class="form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-success">Submit</button>
+        {% endbuttons %}
+    </form>
+{% endblock %}
