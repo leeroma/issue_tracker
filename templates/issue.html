@@ -12,6 +12,7 @@
         <p class="card-text">Type: {{ issue.type }}</p>
         <p class="card-text">Status: {{ issue.status }}</p>
         <div class="card-footer">
+            <small class="text-body-secondary">Created at: {{ issue.created_at }}</small> |
             <small class="text-body-secondary">Last updated: {{ issue.updated_at }}</small>
         </div>
     </div>

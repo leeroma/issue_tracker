@@ -31,4 +31,4 @@ class Issue(models.Model):
     updated_at = models.DateTimeField('Дата обновления', auto_now=True)
 
     def __str__(self):
-        return self.id, self.summary
+        return f'{self.id} {self.summary}'
