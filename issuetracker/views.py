@@ -23,7 +23,7 @@ class CreateIssueView(CreateView):
         form = self.form_class(request.POST)
         if form.is_valid():
             issue = form.save()
-            return HttpResponseRedirect(reverse('issues', args=[issue.id]))
+            return HttpResponseRedirect(reverse('issue', args=[issue.id]))
 
         return render(request, 'create_issue.html', {'form': form})
 
@@ -39,7 +39,7 @@ class CreateStatusView(CreateView):
             form.save()
             return HttpResponseRedirect(reverse('issues'))
 
-        return render(request, 'create_issue.html', {'form': form})
+        return render(request, 'create_status.html', {'form': form})
 
 
 class IssueDetailView(TemplateView):

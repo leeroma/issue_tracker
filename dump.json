@@ -462,30 +462,30 @@
 },
 {
     "model": "issuetracker.status",
-    "pk": 1,
+    "pk": 5,
     "fields": {
-        "name": "Новое"
+        "name": "New"
     }
 },
 {
     "model": "issuetracker.status",
-    "pk": 2,
+    "pk": 6,
     "fields": {
-        "name": "Принято"
+        "name": "Accepted"
     }
 },
 {
     "model": "issuetracker.status",
-    "pk": 3,
+    "pk": 7,
     "fields": {
-        "name": "В процессе"
+        "name": "In progress"
     }
 },
 {
     "model": "issuetracker.status",
-    "pk": 4,
+    "pk": 8,
     "fields": {
-        "name": "Готово"
+        "name": "Finished"
     }
 },
 {

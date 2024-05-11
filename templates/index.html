@@ -4,8 +4,17 @@
 {% block content %}
     <br>
     {% if not issues %}
-        <h1> You haven't added any issue yet. Click on this button to add</h1>
-        <a href="{% url 'create_issue' %}" class="btn btn-success">Add Issue</a>
+        <div class="text-center">
+            <div>
+                <h3>You haven't added any issue yet. Click on this button to add.</h3>
+            </div>
+            <br>
+            <div>
+                <a href="{% url 'create_issue' %}" class="btn btn-success">
+                    Add Issue
+                </a>
+            </div>
+        </div>
     {% endif %}
     {% for issue in issues %}
         <table class="table table-hover">

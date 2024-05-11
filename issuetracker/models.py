@@ -1,8 +1,11 @@
 from django.db import models
 
+from issuetracker.form_validators import StatusValidator
+
 
 class Status(models.Model):
-    name = models.CharField(max_length=100, null=False, blank=False)
+    SYMBOLS = ".,:;?!/()[]{}@#&"
+    name = models.CharField(max_length=100, null=False, blank=False, unique=True, validators=[StatusValidator(SYMBOLS)])
 
     class Meta:
         verbose_name_plural = 'Statuses'
@@ -20,7 +23,7 @@ class Type(models.Model):
 
 class Issue(models.Model):
     summary = models.CharField('Заголовок', max_length=100, null=False, blank=False)
-    description = models.CharField('Описание', max_length=3000, null=True, blank=True)
+    description = models.TextField('Описание', max_length=3000, null=True, blank=True)
     status = models.ForeignKey(Status, on_delete=models.PROTECT, related_name='status', verbose_name='Статус')
     type = models.ForeignKey(Type, on_delete=models.PROTECT, related_name='type', verbose_name='Тип')
 
