@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% block title %}Update Issue {{ issue.pk }}{% endblock %}
+
+{% block content %}
+<form action="{% url 'update_issue' issue.pk %}"  method="post" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+        <button type="submit" class="btn btn-success">Submit</button>
+    {% endbuttons %}
+</form>
+{% endblock %}

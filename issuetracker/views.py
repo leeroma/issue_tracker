@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from django.views.generic import ListView, CreateView, TemplateView
+from django.views.generic import ListView, CreateView, TemplateView, UpdateView, DeleteView
 
 from issuetracker.forms import IssueForm, StatusForm
 from issuetracker.models import Issue, Status
@@ -49,3 +49,20 @@ class IssueDetailView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['issue'] = get_object_or_404(Issue, pk=self.kwargs['pk'])
         return context
+
+
+class UpdateIssueView(UpdateView):
+    model = Issue
+    template_name = 'update_issue.html'
+    context_object_name = 'issue'
+    form_class = IssueForm
+
+    def get_success_url(self):
+        return reverse('issue', args=[self.get_object().pk])
+
+
+class DeleteIssueView(DeleteView):
+    model = Issue
+
+    def get_success_url(self):
+        return reverse('issues')

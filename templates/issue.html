@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block title %}Issue {{ issue.pk }}{% endblock %}
-
 {% block content %}
     <div class="card text-center">
         <div class="card-header">
@@ -17,8 +16,34 @@
         </div>
     </div>
     <br>
-    <div class="d-flex justify-content-evenly">
-        <a href="{% url 'issues' %}" class="btn btn-success">Return</a>
-        <a class="btn btn-danger">Delete</a>
+    <div class="d-flex justify-content-center">
+        <div class="btn-group" role="group" aria-label="Large button group">
+            <a href="{% url 'issues' %}" class="btn btn-success">Return</a>
+            <a href="{% url 'update_issue' issue.pk %}" class="btn btn-secondary">Edit</a>
+            <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Delete</a>
+        </div>
     </div>
+
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Issue #{{ issue.pk }}</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete Issue "{{ issue.summary }}"
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <form action="{% url 'delete_issue' issue.pk %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
