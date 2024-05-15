@@ -1,9 +1,10 @@
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, TemplateView, UpdateView, DeleteView
 
-from issuetracker.forms import IssueForm, StatusForm
+from issuetracker.forms import IssueForm, StatusForm, SearchForm
 from issuetracker.models import Issue, Status
 
 
@@ -15,12 +16,35 @@ class IssueListView(ListView):
     paginate_by = 10
     paginate_orphans = 5
 
-    search_form = None
+    search_form = SearchForm
     search_value = None
+
+    def get(self, request, *args, **kwargs):
+        self.search_value = self.get_search_value()
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
+        context['query'] = self.search_value
         return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        if self.search_value:
+            queryset = queryset.filter(
+                Q(summary__icontains=self.search_value) |
+                Q(description__icontains=self.search_value) |
+                Q(summary__iexact=self.search_value) |
+                Q(description__iexact=self.search_value)
+            )
+
+        return queryset
+
+    def get_search_value(self):
+        search_form = self.search_form(self.request.GET)
+        if search_form.is_valid():
+            return search_form.cleaned_data['search']
 
 
 class CreateIssueView(CreateView):

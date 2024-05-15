@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+from django import forms
 
 from issuetracker.models import Issue, Status, Type
 
@@ -19,3 +20,7 @@ class TypeForm(ModelForm):
     class Meta:
         model = Type
         fields = ('name',)
+
+
+class SearchForm(forms.Form):
+    search = forms.CharField(max_length=150, required=False, label='Search')
