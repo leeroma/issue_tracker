@@ -8,10 +8,19 @@ from issuetracker.models import Issue, Status
 
 
 class IssueListView(ListView):
-    def get(self, request, *args, **kwargs):
-        issues = Issue.objects.all()
-        context = {'issues': issues}
-        return render(request, 'index.html', context)
+    template_name = 'index.html'
+    context_object_name = 'issues'
+    model = Issue
+    ordering = ['-updated_at']
+    paginate_by = 10
+    paginate_orphans = 5
+
+    search_form = None
+    search_value = None
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        return context
 
 
 class CreateIssueView(CreateView):

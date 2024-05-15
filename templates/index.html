@@ -6,17 +6,11 @@
     {% if not issues %}
         <div class="text-center">
             <div>
-                <h3>You haven't added any issue yet. Click on this button to add.</h3>
-            </div>
-            <br>
-            <div>
-                <a href="{% url 'create_issue' %}" class="btn btn-success">
-                    Add Issue
-                </a>
+                <h3>Issues not found</h3>
             </div>
         </div>
-    {% endif %}
-    <table class="table table-hover">
+    {% else %}
+        <table class="table table-hover">
         <thead class="table-success">
         <tr>
             <th scope="col">#</th>
@@ -26,14 +20,18 @@
         </tr>
         </thead>
         <tbody class="table-group-divider">
-        {% for issue in issues %}
-            <tr>
-                <th scope="row"><a class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover" href="{% url 'issue' issue.pk %}">{{ issue.pk }}</a></th>
-                <td>{{ issue.summary }}</td>
-                <td>{{ issue.type }}</td>
-                <td>{{ issue.status }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% endif %}
+{% for issue in issues %}
+    <tr>
+        <th scope="row"><a
+                class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                href="{% url 'issue' issue.pk %}">{{ issue.pk }}</a></th>
+        <td>{{ issue.summary }}</td>
+        <td>{{ issue.type }}</td>
+        <td>{{ issue.status }}</td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+    {% include 'partial/pagination.html' %}
 {% endblock %}
