@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -47,7 +48,7 @@ class IssueListView(ListView):
             return search_form.cleaned_data['search']
 
 
-class CreateIssueView(CreateView):
+class CreateIssueView(LoginRequiredMixin, CreateView):
     model = Issue
     form_class = IssueForm
     template_name = 'create_issue.html'
@@ -61,7 +62,7 @@ class CreateIssueView(CreateView):
         return render(request, 'create_issue.html', {'form': form})
 
 
-class CreateStatusView(CreateView):
+class CreateStatusView(LoginRequiredMixin, CreateView):
     model = Status
     form_class = StatusForm
     template_name = 'create_status.html'

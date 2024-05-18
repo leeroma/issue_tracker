@@ -44,11 +44,15 @@
                             Actions
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark">
+                            {% if request.user.is_authenticated %}
                             <li><a class="dropdown-item" href="{% url 'create_issue' %}">Add issue</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li><a class="dropdown-item" href="{% url 'create_status' %}">Add status</a></li>
+                            {% else %}
+                            <li><a class="dropdown-item" href="{% url 'login' %}">Log in</a></li>
+                            {% endif %}
                         </ul>
                     </li>
                 </ul>
