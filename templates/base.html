@@ -42,7 +42,8 @@
                         <a class="nav-link active" aria-current="page" href="{% url 'projects' %}">Projects</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {% if not request.user.is_authenticated %}disabled{% endif %}" href="#" role="button" data-bs-toggle="dropdown"
+                        <a class="nav-link dropdown-toggle {% if not request.user.is_authenticated %}disabled{% endif %}"
+                           href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">
                             Actions
                         </a>
@@ -52,6 +53,10 @@
                                 <hr class="dropdown-divider">
                             </li>
                             <li><a class="dropdown-item" href="{% url 'create_status' %}">Add status</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'create_project' %}">Add project</a></li>
                         </ul>
                     </li>
                 </ul>

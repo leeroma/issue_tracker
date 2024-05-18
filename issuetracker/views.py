@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, TemplateView, UpdateView, DeleteView, DetailView
 
-from issuetracker.forms import IssueForm, StatusForm, SearchForm
+from issuetracker.forms import IssueForm, StatusForm, SearchForm, ProjectForm
 from issuetracker.models import Issue, Status, Project
 
 
@@ -59,7 +59,7 @@ class CreateIssueView(LoginRequiredMixin, CreateView):
             issue = form.save()
             return HttpResponseRedirect(reverse('issue', args=[issue.id]))
 
-        return render(request, 'create_issue.html', {'form': form})
+        return render(request, self.template_name, {'form': form})
 
 
 class CreateStatusView(LoginRequiredMixin, CreateView):
@@ -73,7 +73,7 @@ class CreateStatusView(LoginRequiredMixin, CreateView):
             form.save()
             return HttpResponseRedirect(reverse('issues'))
 
-        return render(request, 'create_status.html', {'form': form})
+        return render(request, self.template_name, {'form': form})
 
 
 class IssueDetailView(TemplateView):
@@ -121,3 +121,31 @@ class ProjectDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+
+class ProjectCreateView(LoginRequiredMixin, CreateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = 'projects/create_project.html'
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            project = form.save()
+            return HttpResponseRedirect(reverse('project', args=[project.pk]))
+
+        return render(request, self.template_name, {'form': form})
+
+
+class ProjectUpdateView(LoginRequiredMixin, UpdateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = 'projects/update_project.html'
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            project = form.save()
+            return HttpResponseRedirect(reverse('project', args=[project.pk]))
+
+        return render(request, self.template_name, {'form': form})

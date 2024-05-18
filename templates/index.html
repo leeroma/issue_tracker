@@ -17,6 +17,7 @@
             <th scope="col">Summary</th>
             <th scope="col">Type</th>
             <th scope="col">Status</th>
+            <th scope="col">Project</th>
         </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -29,6 +30,8 @@
         <td>{{ issue.summary }}</td>
         <td>{{ issue.type }}</td>
         <td>{{ issue.status }}</td>
+        <td><a class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+               href="{% url 'project' issue.project_id %}">{{ issue.project }}</a></td>
     </tr>
 {% endfor %}
 </tbody>
