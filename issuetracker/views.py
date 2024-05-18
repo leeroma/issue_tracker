@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.views.generic import ListView, CreateView, TemplateView, UpdateView, DeleteView
 
 from issuetracker.forms import IssueForm, StatusForm, SearchForm
-from issuetracker.models import Issue, Status
+from issuetracker.models import Issue, Status, Project
 
 
 class IssueListView(ListView):
@@ -85,7 +85,7 @@ class IssueDetailView(TemplateView):
         return context
 
 
-class UpdateIssueView(UpdateView):
+class UpdateIssueView(LoginRequiredMixin, UpdateView):
     model = Issue
     template_name = 'update_issue.html'
     context_object_name = 'issue'
@@ -95,8 +95,19 @@ class UpdateIssueView(UpdateView):
         return reverse('issue', args=[self.get_object().pk])
 
 
-class DeleteIssueView(DeleteView):
+class DeleteIssueView(LoginRequiredMixin, DeleteView):
     model = Issue
 
     def get_success_url(self):
         return reverse('issues')
+
+
+class ProjectListView(ListView):
+    template_name = 'projects/projects.html'
+    context_object_name = 'projects'
+    model = Project
+    ordering = ['-start']
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        return context

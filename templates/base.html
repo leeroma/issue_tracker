@@ -29,7 +29,7 @@
                 <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                     <li class="nav-item">
                         {% if request.user.is_authenticated %}
-                        <h4>Hello {{ request.user.username }}!</h4>
+                            <h4>Hello {{ request.user.username }}!</h4>
                             <a class="nav-link active" href="{% url 'logout' %}">Log out</a>
                         {% else %}
                             <a class="nav-link active" href="{% url 'login' %}">Log In</a>
@@ -38,21 +38,20 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{% url 'issues' %}">Issues</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'projects' %}">Projects</a>
+                    </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        <a class="nav-link dropdown-toggle {% if not request.user.is_authenticated %}disabled{% endif %}" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">
                             Actions
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                            {% if request.user.is_authenticated %}
                             <li><a class="dropdown-item" href="{% url 'create_issue' %}">Add issue</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li><a class="dropdown-item" href="{% url 'create_status' %}">Add status</a></li>
-                            {% else %}
-                            <li><a class="dropdown-item" href="{% url 'login' %}">Log in</a></li>
-                            {% endif %}
                         </ul>
                     </li>
                 </ul>

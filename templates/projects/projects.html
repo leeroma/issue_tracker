@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Projects{% endblock %}
+
+{% block content %}
+    <br>
+    {% if not projects %}
+        <div class="text-center">
+            <div>
+                <h3>Projects not found</h3>
+            </div>
+        </div>
+    {% else %}
+        <table class="table table-hover">
+        <thead class="table-success">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Start</th>
+            <th scope="col">Deadline</th>
+        </tr>
+        </thead>
+        <tbody class="table-group-divider">
+    {% endif %}
+{% for project in projects %}
+    <tr>
+        <th scope="row"><a
+                class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                href="#">{{ project.pk }}</a></th>
+        <td>{{ project.name }}</td>
+        <td>{{ project.start }}</td>
+        <td>{% if not project.deadline %}Not set{% else %}{{ project.deadline }}{% endif %}</td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

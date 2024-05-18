@@ -1,7 +1,7 @@
 from django.urls import path
 
 from issuetracker.views import IssueListView, CreateIssueView, CreateStatusView, IssueDetailView, UpdateIssueView, \
-    DeleteIssueView
+    DeleteIssueView, ProjectListView
 
 urlpatterns = [
     path('', IssueListView.as_view(), name='issues'),
@@ -10,4 +10,5 @@ urlpatterns = [
     path('issue/<int:pk>', IssueDetailView.as_view(), name='issue'),
     path('update_issue/<int:pk>', UpdateIssueView.as_view(), name='update_issue'),
     path('delete_issue/<int:pk>', DeleteIssueView.as_view(), name='delete_issue'),
+    path('projects', ProjectListView.as_view(), name='projects'),
 ]
