@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 
@@ -18,3 +18,9 @@ class LoginView(TemplateView):
         context = {'message': 'Invalid username or password'}
 
         return render(request, self.template_name, context=context)
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('issues')
+
