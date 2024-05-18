@@ -6,8 +6,9 @@
             Issue #{{ issue.pk }}
         </div>
         <div class="card-body">
+            <h5 class="card-title">Project: {{ issue.project }}</h5>
             <h4 class="card-title">{{ issue.summary }}</h4>
-            <h5 class="card-text">{{ issue.description }}</h5>
+            <h6 class="card-text">{{ issue.description }}</h6>
         </div>
         <p class="card-text">Type: {{ issue.type }}</p>
         <p class="card-text">Status: {{ issue.status }}</p>

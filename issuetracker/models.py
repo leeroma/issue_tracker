@@ -21,6 +21,17 @@ class Type(models.Model):
         return self.name
 
 
+class Project(models.Model):
+    name = models.CharField('Название', max_length=100, null=False, blank=False, validators=[validate_language, ])
+    description = models.TextField('Описание', max_length=3000, null=True, blank=True, validators=[validate_language, ])
+
+    start = models.DateField('Дата начала', null=False, blank=False)
+    deadline = models.DateField('Дата окончания', blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Issue(models.Model):
     summary = models.CharField('Заголовок', max_length=100, null=False, blank=False,
                                validators=[validate_language, check_len, ])
@@ -28,6 +39,8 @@ class Issue(models.Model):
     status = models.ForeignKey(Status, on_delete=models.PROTECT, related_name='status', verbose_name='Статус')
     type = models.ForeignKey(Type, on_delete=models.PROTECT, related_name='type', verbose_name='Тип')
 
+    project = models.ForeignKey(Project, on_delete=models.PROTECT, related_name='project', verbose_name='Проект',
+                                default=1)
     created_at = models.DateTimeField('Дата создания', auto_now_add=True)
     updated_at = models.DateTimeField('Дата обновления', auto_now=True)
 
