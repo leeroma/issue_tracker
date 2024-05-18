@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'bootstrap5',
 
     'issuetracker',
+    'accounts',
 ]
 
 MIDDLEWARE = [
