@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from django.views.generic import ListView, CreateView, TemplateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, TemplateView, UpdateView, DeleteView, DetailView
 
 from issuetracker.forms import IssueForm, StatusForm, SearchForm
 from issuetracker.models import Issue, Status, Project
@@ -110,4 +110,14 @@ class ProjectListView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
+        return context
+
+
+class ProjectDetailView(DetailView):
+    template_name = 'projects/project.html'
+    model = Project
+    context_object_name = 'project'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         return context
