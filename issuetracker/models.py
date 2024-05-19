@@ -41,8 +41,14 @@ class Issue(models.Model):
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='issues', verbose_name='Проект',
                                 default=1)
+    is_deleted = models.BooleanField(default=False)
+
     created_at = models.DateTimeField('Дата создания', auto_now_add=True)
     updated_at = models.DateTimeField('Дата обновления', auto_now=True)
 
     def __str__(self):
         return f'{self.id} {self.summary}'
+
+    def delete(self, using=None, keep_parents=False):
+        self.is_deleted = True
+        self.save(update_fields=['is_deleted'])

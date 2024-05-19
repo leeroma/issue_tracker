@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, TemplateView, UpdateView, DeleteView, DetailView
@@ -30,7 +30,7 @@ class IssueListView(ListView):
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().filter(is_deleted=False)
 
         if self.search_value:
             queryset = queryset.filter(
@@ -94,7 +94,9 @@ class IssueDetailView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['issue'] = get_object_or_404(Issue, pk=self.kwargs['pk'])
+        context['issue'] = Issue.objects.filter(is_deleted=False, pk=kwargs['pk']).first()
+        if not context['issue']:
+            raise Http404('Issue not found.')
         return context
 
 

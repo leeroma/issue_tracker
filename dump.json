@@ -363,11 +363,47 @@
     }
 },
 {
+    "model": "auth.permission",
+    "pk": 37,
+    "fields": {
+        "name": "Can add project",
+        "content_type": 10,
+        "codename": "add_project"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 38,
+    "fields": {
+        "name": "Can change project",
+        "content_type": 10,
+        "codename": "change_project"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 39,
+    "fields": {
+        "name": "Can delete project",
+        "content_type": 10,
+        "codename": "delete_project"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 40,
+    "fields": {
+        "name": "Can view project",
+        "content_type": 10,
+        "codename": "view_project"
+    }
+},
+{
     "model": "auth.user",
     "pk": 1,
     "fields": {
         "password": "pbkdf2_sha256$600000$Q6INlprOBBnqnYKSZHPis2$XcV7Sw8qaBWO9AdFwEhmfRcZO/8ukGasBli36Q4dD/g=",
-        "last_login": "2024-05-11T18:58:12.018Z",
+        "last_login": "2024-05-19T07:53:47.606Z",
         "is_superuser": true,
         "username": "root",
         "first_name": "",
@@ -453,6 +489,14 @@
     }
 },
 {
+    "model": "contenttypes.contenttype",
+    "pk": 10,
+    "fields": {
+        "app_label": "issuetracker",
+        "model": "project"
+    }
+},
+{
     "model": "sessions.session",
     "pk": "fp2cfm1w7vtweg5xzb16rcgysgafisni",
     "fields": {
@@ -462,10 +506,26 @@
 },
 {
     "model": "sessions.session",
+    "pk": "l0alb9y64dn0qr7am8irs5y6nidjx2m7",
+    "fields": {
+        "session_data": ".eJxVjDsOwyAQRO9CHSFD-Cwp0-cMaIElOIlAMnYV-e62JRdJN5r3Zr7M4zIXv3Sa_JjYjQl2-e0CxjfVA6QX1mfjsdV5GgM_FH7Szh8t0ed-un8HBXvZ1_EapFESHMEgEolsFCRnQelMLhsCJzNZLQCjRmE1SJTKkEKNwx4iWzfS5jde:1s8bMZ:58YUzqLT1_dX8T60s2wQ3m49TAbSB51QACGWbKFfutQ",
+        "expire_date": "2024-06-02T07:53:47.609Z"
+    }
+},
+{
+    "model": "sessions.session",
     "pk": "lri3guxwujm39synon4q4lcuq8ijq1oc",
     "fields": {
         "session_data": ".eJxVjDsOwyAQRO9CHSFD-Cwp0-cMaIElOIlAMnYV-e62JRdJN5r3Zr7M4zIXv3Sa_JjYjQl2-e0CxjfVA6QX1mfjsdV5GgM_FH7Szh8t0ed-un8HBXvZ1_EapFESHMEgEolsFCRnQelMLhsCJzNZLQCjRmE1SJTKkEKNwx4iWzfS5jde:1s5lpS:rilCIdnc-4T0yPbd59X6RQK_OYyD9V5T5weTkTS9zME",
         "expire_date": "2024-05-25T12:27:54.032Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "x647fo1ttsef67uc9ywg2cxs2brllq1e",
+    "fields": {
+        "session_data": ".eJxVjDsOwyAQRO9CHSFD-Cwp0-cMaIElOIlAMnYV-e62JRdJN5r3Zr7M4zIXv3Sa_JjYjQl2-e0CxjfVA6QX1mfjsdV5GgM_FH7Szh8t0ed-un8HBXvZ1_EapFESHMEgEolsFCRnQelMLhsCJzNZLQCjRmE1SJTKkEKNwx4iWzfS5jde:1s8JvP:S_55wvLxeBLrpqMC9Dd9GUEw2D7_T_vm-z1j1ZHurV8",
+        "expire_date": "2024-06-01T13:16:35.786Z"
     }
 },
 {
@@ -518,6 +578,26 @@
     }
 },
 {
+    "model": "issuetracker.project",
+    "pk": 1,
+    "fields": {
+        "name": "Base",
+        "description": "Base project",
+        "start": "2024-05-18",
+        "deadline": null
+    }
+},
+{
+    "model": "issuetracker.project",
+    "pk": 5,
+    "fields": {
+        "name": "Test Project",
+        "description": "Test ProjectTest ProjectTest Project",
+        "start": "2024-05-18",
+        "deadline": null
+    }
+},
+{
     "model": "issuetracker.issue",
     "pk": 4,
     "fields": {
@@ -525,6 +605,8 @@
         "description": "Fix the template bug on the main page",
         "status": 8,
         "type": 2,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T17:24:10.519Z",
         "updated_at": "2024-05-11T18:12:53.209Z"
     }
@@ -537,6 +619,8 @@
         "description": "Write tests for beta version of new app",
         "status": 6,
         "type": 1,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T17:50:25.645Z",
         "updated_at": "2024-05-11T17:50:25.645Z"
     }
@@ -549,6 +633,8 @@
         "description": "",
         "status": 8,
         "type": 1,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T17:51:08.603Z",
         "updated_at": "2024-05-11T17:51:08.603Z"
     }
@@ -561,6 +647,8 @@
         "description": "Validators don't work, fix",
         "status": 5,
         "type": 2,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T17:52:17.744Z",
         "updated_at": "2024-05-11T17:52:17.744Z"
     }
@@ -573,6 +661,8 @@
         "description": "Find bloggers for new ad",
         "status": 7,
         "type": 1,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T17:56:28.329Z",
         "updated_at": "2024-05-11T17:56:28.329Z"
     }
@@ -585,6 +675,8 @@
         "description": "",
         "status": 7,
         "type": 1,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T17:57:27.429Z",
         "updated_at": "2024-05-11T17:57:27.429Z"
     }
@@ -597,6 +689,8 @@
         "description": "add modals on delete page",
         "status": 8,
         "type": 3,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T17:58:30.374Z",
         "updated_at": "2024-05-11T17:58:30.374Z"
     }
@@ -609,6 +703,8 @@
         "description": "write report about last meeting",
         "status": 6,
         "type": 1,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T17:59:08.224Z",
         "updated_at": "2024-05-11T17:59:08.224Z"
     }
@@ -621,6 +717,8 @@
         "description": "Upgrade the email server software to the latest version to improve security and performance.",
         "status": 8,
         "type": 3,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T18:06:47.065Z",
         "updated_at": "2024-05-11T18:12:42.809Z"
     }
@@ -633,6 +731,8 @@
         "description": "Resolve printer configuration issues in the office to ensure all team members can print documents without any trouble.",
         "status": 6,
         "type": 2,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T18:07:04.706Z",
         "updated_at": "2024-05-11T18:07:04.706Z"
     }
@@ -645,6 +745,8 @@
         "description": "Develop and deploy a task tracking system to streamline task management and improve team productivity.",
         "status": 5,
         "type": 3,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T18:07:25.241Z",
         "updated_at": "2024-05-11T18:07:25.241Z"
     }
@@ -657,6 +759,8 @@
         "description": "Install and configure a meeting room booking system to facilitate scheduling and avoid conflicts during meetings.",
         "status": 8,
         "type": 3,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T18:07:44.461Z",
         "updated_at": "2024-05-11T18:07:44.462Z"
     }
@@ -669,6 +773,8 @@
         "description": "Investigate and resolve intermittent network connectivity issues reported by some employees in the office.",
         "status": 7,
         "type": 2,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T18:08:06.729Z",
         "updated_at": "2024-05-11T18:08:06.729Z"
     }
@@ -681,6 +787,8 @@
         "description": "Investigate and fix the delay in email delivery experienced by some employees to ensure timely communication.",
         "status": 8,
         "type": 2,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T18:09:06.245Z",
         "updated_at": "2024-05-11T18:09:06.245Z"
     }
@@ -693,6 +801,8 @@
         "description": "Optimize the database performance to reduce query execution time and improve overall system responsiveness.",
         "status": 7,
         "type": 3,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T18:09:23.079Z",
         "updated_at": "2024-05-11T18:09:23.079Z"
     }
@@ -705,6 +815,8 @@
         "description": "Upgrade the security camera system to enhance office security and ensure better surveillance coverage.",
         "status": 6,
         "type": 3,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T18:09:36.903Z",
         "updated_at": "2024-05-11T18:09:36.903Z"
     }
@@ -717,6 +829,8 @@
         "description": "Replace or repair the broken keyboard in the reception area to provide a comfortable working environment for the receptionist.",
         "status": 5,
         "type": 2,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T18:09:53.106Z",
         "updated_at": "2024-05-11T18:09:53.106Z"
     }
@@ -729,6 +843,8 @@
         "description": "Install and configure firewall software on office computers to enhance network security and protect against cyber threats.",
         "status": 5,
         "type": 3,
+        "project": 1,
+        "is_deleted": true,
         "created_at": "2024-05-11T18:10:17.497Z",
         "updated_at": "2024-05-11T18:10:17.497Z"
     }
@@ -741,6 +857,8 @@
         "description": "Plan and organize a team-building event to foster collaboration and morale among office staff.",
         "status": 5,
         "type": 1,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T18:10:38.461Z",
         "updated_at": "2024-05-11T18:10:38.461Z"
     }
@@ -753,6 +871,8 @@
         "description": "Conduct performance reviews for all employees to provide feedback, set goals, and recognize achievements.",
         "status": 7,
         "type": 1,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T18:11:03.922Z",
         "updated_at": "2024-05-11T18:11:03.922Z"
     }
@@ -765,6 +885,8 @@
         "description": "Coordinate logistics and agenda for the quarterly all-hands meeting to update employees on company performance, goals, and initiatives.",
         "status": 6,
         "type": 1,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T18:11:20.955Z",
         "updated_at": "2024-05-11T18:11:20.955Z"
     }
@@ -777,6 +899,8 @@
         "description": "",
         "status": 7,
         "type": 2,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T19:12:20.930Z",
         "updated_at": "2024-05-11T19:12:20.930Z"
     }
@@ -789,6 +913,8 @@
         "description": "Revise Employee Handbook",
         "status": 6,
         "type": 1,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T19:34:39.542Z",
         "updated_at": "2024-05-11T19:34:39.542Z"
     }
@@ -801,6 +927,8 @@
         "description": "Update contact information",
         "status": 8,
         "type": 1,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T19:35:47.829Z",
         "updated_at": "2024-05-11T19:35:50.303Z"
     }
@@ -813,20 +941,10 @@
         "description": "",
         "status": 5,
         "type": 1,
+        "project": 1,
+        "is_deleted": false,
         "created_at": "2024-05-11T20:20:31.633Z",
         "updated_at": "2024-05-11T20:20:31.633Z"
-    }
-},
-{
-    "model": "issuetracker.issue",
-    "pk": 33,
-    "fields": {
-        "summary": "afasdkfj aslkdfj",
-        "description": "sadfkjsdklf",
-        "status": 6,
-        "type": 1,
-        "created_at": "2024-05-14T14:44:22.904Z",
-        "updated_at": "2024-05-14T14:44:22.904Z"
     }
 }
 ]
