@@ -4,37 +4,13 @@
 {% block content %}
     <br>
     {% if not issues %}
-        <div class="text-center">
-            <div>
-                <h3>Issues not found</h3>
-            </div>
+    <div class="text-center">
+        <div>
+            <h3>Issues not found</h3>
         </div>
+    </div>
     {% else %}
-        <table class="table table-hover">
-        <thead class="table-success">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Summary</th>
-            <th scope="col">Type</th>
-            <th scope="col">Status</th>
-            <th scope="col">Project</th>
-        </tr>
-        </thead>
-        <tbody class="table-group-divider">
+    {% include 'partial/issues_list.html' %}
     {% endif %}
-{% for issue in issues %}
-    <tr>
-        <th scope="row"><a
-                class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
-                href="{% url 'issue' issue.pk %}">{{ issue.pk }}</a></th>
-        <td>{{ issue.summary }}</td>
-        <td>{{ issue.type }}</td>
-        <td>{{ issue.status }}</td>
-        <td><a class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
-               href="{% url 'project' issue.project_id %}">{{ issue.project }}</a></td>
-    </tr>
-{% endfor %}
-</tbody>
-</table>
     {% include 'partial/pagination.html' %}
 {% endblock %}

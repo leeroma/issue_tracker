@@ -39,7 +39,7 @@ class Issue(models.Model):
     status = models.ForeignKey(Status, on_delete=models.PROTECT, related_name='status', verbose_name='Статус')
     type = models.ForeignKey(Type, on_delete=models.PROTECT, related_name='type', verbose_name='Тип')
 
-    project = models.ForeignKey(Project, on_delete=models.PROTECT, related_name='project', verbose_name='Проект',
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='issues', verbose_name='Проект',
                                 default=1)
     created_at = models.DateTimeField('Дата создания', auto_now_add=True)
     updated_at = models.DateTimeField('Дата обновления', auto_now=True)

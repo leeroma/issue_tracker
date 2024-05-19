@@ -7,7 +7,7 @@ from issuetracker.models import Issue, Status, Type, Project
 class IssueForm(ModelForm):
     class Meta:
         model = Issue
-        exclude = ['created_by', 'updated_by']
+        exclude = ['created_by', 'updated_by', 'project',]
 
 
 class StatusForm(ModelForm):

@@ -53,13 +53,26 @@ class CreateIssueView(LoginRequiredMixin, CreateView):
     form_class = IssueForm
     template_name = 'create_issue.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        project = get_object_or_404(Project, pk=self.kwargs['pk'])
+        context['project'] = project
+        return context
+
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            issue = form.save()
+            issue = Issue.objects.create(
+                project_id=kwargs['pk'],
+                summary=form.cleaned_data['summary'],
+                description=form.cleaned_data['description'],
+                status=form.cleaned_data['status'],
+                type=form.cleaned_data['type'],
+            )
+            issue.save()
             return HttpResponseRedirect(reverse('issue', args=[issue.id]))
 
-        return render(request, self.template_name, {'form': form})
+        return render(request, 'create_issue.html', context={'form': form})
 
 
 class CreateStatusView(LoginRequiredMixin, CreateView):
@@ -120,6 +133,8 @@ class ProjectDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['issues'] = context.get('project').issues.all()
+        context['issue_form'] = IssueForm()
         return context
 
 
@@ -149,3 +164,10 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
             return HttpResponseRedirect(reverse('project', args=[project.pk]))
 
         return render(request, self.template_name, {'form': form})
+
+
+class ProjectDeleteView(LoginRequiredMixin, DeleteView):
+    model = Project
+
+    def get_success_url(self):
+        return reverse('projects')
