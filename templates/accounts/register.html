@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    <br>
+    <div class="d-flex justify-content-center">
+        <form action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+                <button type="submit" class="btn btn-success">Submit</button>
+            {% endbuttons %}
+        </form>
+    </div>
+{% endblock %}
