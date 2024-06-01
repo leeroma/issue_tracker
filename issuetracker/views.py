@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
@@ -140,10 +140,11 @@ class ProjectDetailView(DetailView):
         return context
 
 
-class ProjectCreateView(LoginRequiredMixin, CreateView):
+class ProjectCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
     model = Project
     form_class = ProjectForm
     template_name = 'projects/create_project.html'
+    permission_required = 'issuetracker.add_project'
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
@@ -154,10 +155,11 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
         return render(request, self.template_name, {'form': form})
 
 
-class ProjectUpdateView(LoginRequiredMixin, UpdateView):
+class ProjectUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     model = Project
     form_class = ProjectForm
     template_name = 'projects/update_project.html'
+    permission_required = 'issuetracker.change_project'
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
@@ -168,8 +170,9 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
         return render(request, self.template_name, {'form': form})
 
 
-class ProjectDeleteView(LoginRequiredMixin, DeleteView):
+class ProjectDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
     model = Project
+    permission_required = 'issuetracker.delete_project'
 
     def get_success_url(self):
         return reverse('projects')

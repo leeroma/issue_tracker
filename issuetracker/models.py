@@ -1,5 +1,6 @@
 from django.db import models
 
+from accounts.models import Account
 from issuetracker.form_validators import StatusValidator, validate_language, check_len
 
 
@@ -24,7 +25,7 @@ class Type(models.Model):
 class Project(models.Model):
     name = models.CharField('Название', max_length=100, null=False, blank=False, validators=[validate_language, ])
     description = models.TextField('Описание', max_length=3000, null=True, blank=True, validators=[validate_language, ])
-
+    user = models.ManyToManyField(Account, verbose_name='Пользователь', related_name='projects')
     start = models.DateField('Дата начала', null=False, blank=False)
     deadline = models.DateField('Дата окончания', blank=True, null=True)
 
