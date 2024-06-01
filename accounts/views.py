@@ -9,13 +9,12 @@ class LoginView(TemplateView):
     def post(self, request, *args, **kwargs):
         username = request.POST['username']
         password = request.POST['password']
-
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
             return redirect('issues')
 
-        context = {'message': 'Invalid username or password'}
+        context = {'message': 'Invalid email or password'}
 
         return render(request, self.template_name, context=context)
 
