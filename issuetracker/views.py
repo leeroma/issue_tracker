@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, TemplateView, UpdateView, DeleteView, DetailView
 
+from accounts.models import Account
 from issuetracker.forms import IssueForm, StatusForm, SearchForm, ProjectForm
 from issuetracker.models import Issue, Status, Project
 
@@ -30,7 +31,7 @@ class IssueListView(ListView):
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset().filter(is_deleted=False)
+        queryset = self.model.objects.filter(is_deleted=False).select_related('type', 'status', 'project', )
 
         if self.search_value:
             queryset = queryset.filter(
@@ -135,7 +136,7 @@ class ProjectDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['issues'] = context.get('project').issues.all()
+        context['issues'] = context.get('project').issues.all().select_related('type', 'status', 'project', )
         context['issue_form'] = IssueForm()
         return context
 
@@ -150,6 +151,8 @@ class ProjectCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView)
         form = self.form_class(request.POST)
         if form.is_valid():
             project = form.save()
+            project.user.add(self.request.user)
+            project.save()
             return HttpResponseRedirect(reverse('project', args=[project.pk]))
 
         return render(request, self.template_name, {'form': form})
@@ -176,3 +179,13 @@ class ProjectDeleteView(PermissionRequiredMixin, LoginRequiredMixin, DeleteView)
 
     def get_success_url(self):
         return reverse('projects')
+
+
+class ProjectTeamView(TemplateView):
+    template_name = 'projects/team.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        project = Project.objects.all().prefetch_related('user', 'user__groups').get(pk=self.kwargs['pk'])
+        context['project'] = project
+        return context

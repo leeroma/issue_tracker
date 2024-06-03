@@ -13,6 +13,7 @@
         <p class="card-text">Start date: {{ project.start }}</p>
         <p class="card-text">Deadline: {% if not project.deadline %}Not set{% else %}
             {{ project.deadline }}{% endif %}</p>
+        <a href="{% url 'project_team' project.pk %}">View Team</a>
     </div>
     <br>
     <div class="d-flex justify-content-center">
@@ -21,9 +22,15 @@
         {% else %}
             <div class="btn-group" role="group" aria-label="Large button group">
                 <a href="{% url 'projects' %}" class="btn btn-primary">Return</a>
-                <a href="{% url 'update_project' project.pk %}" class="btn btn-secondary">Edit</a>
-                <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdropDelete">Delete</a>
-                <a href="{% url 'create_issue' project.pk %}" class="btn btn-success">Add Issue</a>
+                {% if perms.project.change %}
+                    <a href="{% url 'update_project' project.pk %}" class="btn btn-secondary">Edit</a>
+                {% endif %}
+                {% if perms.project.delete %}
+                    <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdropDelete">Delete</a>
+                {% endif %}
+                {% if perms.project.add %}
+                    <a href="{% url 'create_issue' project.pk %}" class="btn btn-success">Add Issue</a>
+                {% endif %}
             </div>
         {% endif %}
         <div class="modal fade" id="staticBackdropDelete" data-bs-backdrop="static" data-bs-keyboard="false"

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Project Team{% endblock %}
+
+{% block content %}
+    <br>
+    <div class="container d-flex justify-content-center">
+        <h3>{{ project.name }}</h3>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Role</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in project.user.all %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.groups.first.name }}</td>
+                <td><a href="" class="btn btn-danger">Remove</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if perms.project.change %}
+        <a href="" class="btn btn-success">Add to team</a>
+    {% endif %}
+{% endblock %}

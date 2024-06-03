@@ -55,7 +55,8 @@
         "name": "Base",
         "description": "Base project",
         "start": "2024-05-18",
-        "deadline": null
+        "deadline": null,
+        "user": []
     }
 },
 {
@@ -65,7 +66,8 @@
         "name": "Test Project",
         "description": "Test ProjectTest ProjectTest Project",
         "start": "2024-05-18",
-        "deadline": null
+        "deadline": null,
+        "user": []
     }
 },
 {
@@ -416,6 +418,42 @@
         "is_deleted": false,
         "created_at": "2024-05-11T20:20:31.633Z",
         "updated_at": "2024-05-11T20:20:31.633Z"
+    }
+},
+{
+    "model": "accounts.account",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$600000$zIGSyFSjpDOxxAFv1JVcmH$oxEQLEGFJDlUDUE41bjgKOTSJVuM1smmFhqEJ/ZWAhs=",
+        "last_login": "2024-06-01T13:02:28.422Z",
+        "is_superuser": true,
+        "username": "root@root.kz",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2024-06-01T08:48:37.272Z",
+        "email": "root@root.kz",
+        "first_name": "",
+        "last_name": "",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "accounts.account",
+    "pk": 8,
+    "fields": {
+        "password": "pbkdf2_sha256$600000$iKe36l3Tlf3eumUYmLdbk1$m3X+xXLHcZ7AOABn7qvRDxNTEo6pLVrchnM4ove/eXQ=",
+        "last_login": "2024-06-01T13:01:55.560Z",
+        "is_superuser": false,
+        "username": "manager@issuetracker.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-06-01T12:54:05.723Z",
+        "email": "manager@issuetracker.com",
+        "first_name": "Manager",
+        "last_name": "",
+        "groups": [],
+        "user_permissions": []
     }
 }
 ]
