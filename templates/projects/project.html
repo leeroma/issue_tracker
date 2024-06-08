@@ -30,7 +30,7 @@
                         <a class="btn btn-danger" data-bs-toggle="modal"
                            data-bs-target="#staticBackdropDelete">Delete</a>
                     {% endif %}
-                    {% if perms.issuetracker.add_project %}
+                    {% if perms.issuetracker.add_issue %}
                         <a href="{% url 'create_issue' project.pk %}" class="btn btn-success">Add Issue</a>
                     {% endif %}
                 {% endif %}

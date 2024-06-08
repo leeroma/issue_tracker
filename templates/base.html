@@ -52,7 +52,7 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="{% url 'create_project' %}">Add project</a></li>
+                            <li><a class="dropdown-item {% if not perms.issuetracker.add_project %}disabled{% endif %}" href="{% url 'create_project' %}">Add project</a></li>
                         </ul>
                     </li>
                 </ul>

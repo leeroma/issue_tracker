@@ -4,7 +4,7 @@
 
 {% block content %}
     <br>
-    <form action="{% url 'create_issue' project.pk %}" method="post" class="form">
+    <form action="{% url 'create_issue' project.id %}" method="post" class="form">
         {% csrf_token %}
         {% bootstrap_form form %}
         {% buttons %}

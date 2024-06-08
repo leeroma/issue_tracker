@@ -26,7 +26,9 @@
                 <a href="{% url 'issues' %}" class="btn btn-success">Return</a>
                 {% if request.user in issue.project.user.all %}
                     <a href="{% url 'update_issue' issue.pk %}" class="btn btn-secondary">Edit</a>
-                    <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Delete</a>
+{#                    {% if perms.issuetracker.delete_issue %}#}
+                        <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Delete</a>
+{#                    {% endif %}#}
                 {% endif %}
             </div>
             </div>

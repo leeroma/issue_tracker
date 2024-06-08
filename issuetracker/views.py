@@ -75,6 +75,7 @@ class CreateIssueView(PermissionRequiredView, LoginRequiredMixin, CreateView):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
+        project = get_object_or_404(Project, pk=self.kwargs['pk'])
         if form.is_valid():
             issue = Issue.objects.create(
                 project_id=kwargs['pk'],
@@ -86,7 +87,7 @@ class CreateIssueView(PermissionRequiredView, LoginRequiredMixin, CreateView):
             issue.save()
             return HttpResponseRedirect(reverse('issue', args=[issue.id]))
 
-        return render(request, 'create_issue.html', context={'form': form})
+        return render(request, self.template_name, context={'form': form, 'project': project})
 
 
 class CreateStatusView(LoginRequiredMixin, CreateView):
@@ -124,8 +125,9 @@ class UpdateIssueView(PermissionRequiredView, LoginRequiredMixin, UpdateView):
         return reverse('issue', args=[self.get_object().pk])
 
 
-class DeleteIssueView(PermissionRequiredView, LoginRequiredMixin, DeleteView):
+class DeleteIssueView(PermissionRequiredView, PermissionRequiredMixin, LoginRequiredMixin, DeleteView):
     model = Issue
+    permission_required = 'issuetracker.delete_issue'
 
     def get_success_url(self):
         return reverse('issues')
