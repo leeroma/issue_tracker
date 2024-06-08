@@ -6,9 +6,14 @@ from accounts.models import Account
 
 
 class IssueForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['status'].empty_label = 'Статус не выбран'
+        self.fields['type'].empty_label = 'Тип не выбран'
+
     class Meta:
         model = Issue
-        exclude = ['created_by', 'updated_by', 'project', ]
+        exclude = ['created_by', 'updated_by', 'project', 'is_deleted']
 
 
 class StatusForm(ModelForm):
