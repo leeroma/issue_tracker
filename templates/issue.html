@@ -20,14 +20,16 @@
     <br>
     <div class="d-flex justify-content-center">
         {% if not request.user.is_authenticated %}
-        <a href="{% url 'issues' %}" class="btn btn-success">Return</a>
-        {% else %}
-        <div class="btn-group" role="group" aria-label="Large button group">
             <a href="{% url 'issues' %}" class="btn btn-success">Return</a>
-            <a href="{% url 'update_issue' issue.pk %}" class="btn btn-secondary">Edit</a>
-            <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Delete</a>
-        </div>
-    </div>
+        {% else %}
+            <div class="btn-group" role="group" aria-label="Large button group">
+                <a href="{% url 'issues' %}" class="btn btn-success">Return</a>
+                {% if request.user in issue.project.user.all %}
+                    <a href="{% url 'update_issue' issue.pk %}" class="btn btn-secondary">Edit</a>
+                    <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Delete</a>
+                {% endif %}
+            </div>
+            </div>
         {% endif %}
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
          aria-labelledby="staticBackdropLabel" aria-hidden="true">

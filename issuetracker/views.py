@@ -1,13 +1,26 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from django.views.generic import ListView, CreateView, TemplateView, UpdateView, DeleteView, DetailView
+from django.views.generic import ListView, CreateView, TemplateView, UpdateView, DeleteView, DetailView, View
 
 from issuetracker.forms import IssueForm, StatusForm, SearchForm, ProjectForm, ProjectAddUserForm
 from issuetracker.models import Issue, Status, Project
 from accounts.models import Account
+
+
+class PermissionRequiredView(View):
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            project = Project.objects.get(pk=kwargs['pk'])
+        except Exception:
+            project = Project.objects.get(issues__id=kwargs['pk'])
+        if request.user not in project.user.all():
+            raise PermissionDenied()
+
+        return super().dispatch(request, *args, **kwargs)
 
 
 class IssueListView(ListView):
@@ -49,7 +62,7 @@ class IssueListView(ListView):
             return search_form.cleaned_data['search']
 
 
-class CreateIssueView(LoginRequiredMixin, CreateView):
+class CreateIssueView(PermissionRequiredView, LoginRequiredMixin, CreateView):
     model = Issue
     form_class = IssueForm
     template_name = 'create_issue.html'
@@ -101,7 +114,7 @@ class IssueDetailView(TemplateView):
         return context
 
 
-class UpdateIssueView(LoginRequiredMixin, UpdateView):
+class UpdateIssueView(PermissionRequiredView, LoginRequiredMixin, UpdateView):
     model = Issue
     template_name = 'update_issue.html'
     context_object_name = 'issue'
@@ -111,7 +124,7 @@ class UpdateIssueView(LoginRequiredMixin, UpdateView):
         return reverse('issue', args=[self.get_object().pk])
 
 
-class DeleteIssueView(LoginRequiredMixin, DeleteView):
+class DeleteIssueView(PermissionRequiredView, LoginRequiredMixin, DeleteView):
     model = Issue
 
     def get_success_url(self):
@@ -158,7 +171,7 @@ class ProjectCreateView(PermissionRequiredMixin, LoginRequiredMixin, CreateView)
         return render(request, self.template_name, {'form': form})
 
 
-class ProjectUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+class ProjectUpdateView(PermissionRequiredView, PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     model = Project
     form_class = ProjectForm
     template_name = 'projects/update_project.html'
@@ -191,7 +204,7 @@ class ProjectTeamView(TemplateView):
         return context
 
 
-class AddToProjectView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+class AddToProjectView(PermissionRequiredView, PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     model = Project
     form_class = ProjectAddUserForm
     template_name = 'projects/add_to_project.html'
@@ -213,7 +226,7 @@ class AddToProjectView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
         return render(request, self.template_name, {'form': form})
 
 
-class RemoveFromProjectView(PermissionRequiredMixin, UpdateView):
+class RemoveFromProjectView(PermissionRequiredView, PermissionRequiredMixin, UpdateView):
     model = Project
     permission_required = 'issuetracker.change_project'
 
