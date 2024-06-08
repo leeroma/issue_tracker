@@ -25,6 +25,6 @@
         </tbody>
     </table>
     {% if perms.project.change %}
-        <a href="" class="btn btn-success">Add to team</a>
+        <a href="{% url 'add_to_project' project.pk %}" class="btn btn-success">Add to team</a>
     {% endif %}
 {% endblock %}

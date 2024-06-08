@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% block title %}Add to project{% endblock %}
+
+{% block content %}
+    <br>
+    <form action="{% url 'add_to_project' project.pk %}" method="post" class="form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+{% endblock %}

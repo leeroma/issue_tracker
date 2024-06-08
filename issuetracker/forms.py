@@ -2,12 +2,13 @@ from django.forms import ModelForm
 from django import forms
 
 from issuetracker.models import Issue, Status, Type, Project
+from accounts.models import Account
 
 
 class IssueForm(ModelForm):
     class Meta:
         model = Issue
-        exclude = ['created_by', 'updated_by', 'project',]
+        exclude = ['created_by', 'updated_by', 'project', ]
 
 
 class StatusForm(ModelForm):
@@ -37,3 +38,7 @@ class ProjectForm(ModelForm):
     class Meta:
         model = Project
         exclude = ['user']
+
+
+class ProjectAddUserForm(forms.Form):
+    user = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple(), queryset=Account.objects.all())

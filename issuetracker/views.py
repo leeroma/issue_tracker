@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.views.generic import ListView, CreateView, TemplateView, UpdateView, DeleteView, DetailView
 
 from accounts.models import Account
-from issuetracker.forms import IssueForm, StatusForm, SearchForm, ProjectForm
+from issuetracker.forms import IssueForm, StatusForm, SearchForm, ProjectForm, ProjectAddUserForm
 from issuetracker.models import Issue, Status, Project
 
 
@@ -189,3 +189,24 @@ class ProjectTeamView(TemplateView):
         project = Project.objects.all().prefetch_related('user', 'user__groups').get(pk=self.kwargs['pk'])
         context['project'] = project
         return context
+
+
+class AddToProjectView(LoginRequiredMixin, UpdateView):
+    model = Project
+    form_class = ProjectAddUserForm
+    template_name = 'projects/add_to_project.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+
+        return render(request, self.template_name, {'form': form, 'project': self.get_object()})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            project = Project.objects.get(pk=self.kwargs['pk'])
+            project.user.add(*form.cleaned_data['user'])
+            project.save()
+            return HttpResponseRedirect(reverse('project_team', args=[project.pk]))
+
+        return render(request, self.template_name, {'form': form})
