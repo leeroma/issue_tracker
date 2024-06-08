@@ -109,7 +109,10 @@ class IssueDetailView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['issue'] = Issue.objects.filter(is_deleted=False, pk=kwargs['pk']).first()
+        context['issue'] = Issue.objects.filter(
+            is_deleted=False, pk=kwargs['pk']
+        ).select_related('status', 'type', ).prefetch_related('project').first()
+
         if not context['issue']:
             raise Http404('Issue not found.')
         return context
