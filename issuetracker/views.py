@@ -5,9 +5,9 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, TemplateView, UpdateView, DeleteView, DetailView
 
-from accounts.models import Account
 from issuetracker.forms import IssueForm, StatusForm, SearchForm, ProjectForm, ProjectAddUserForm
 from issuetracker.models import Issue, Status, Project
+from accounts.models import Account
 
 
 class IssueListView(ListView):
@@ -191,10 +191,11 @@ class ProjectTeamView(TemplateView):
         return context
 
 
-class AddToProjectView(LoginRequiredMixin, UpdateView):
+class AddToProjectView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
     model = Project
     form_class = ProjectAddUserForm
     template_name = 'projects/add_to_project.html'
+    permission_required = 'issuetracker.change_project'
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
@@ -210,3 +211,16 @@ class AddToProjectView(LoginRequiredMixin, UpdateView):
             return HttpResponseRedirect(reverse('project_team', args=[project.pk]))
 
         return render(request, self.template_name, {'form': form})
+
+
+class RemoveFromProjectView(PermissionRequiredMixin, UpdateView):
+    model = Project
+    permission_required = 'issuetracker.change_project'
+
+    def post(self, request, *args, **kwargs):
+        project = Project.objects.get(pk=self.kwargs['pk'])
+        if request.user in project.user.all():
+            user = Account.objects.get(pk=self.request.POST['user_id'])
+            project.user.remove(user)
+            project.save()
+            return HttpResponseRedirect(reverse('project_team', args=[project.pk]))

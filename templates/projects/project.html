@@ -22,14 +22,17 @@
         {% else %}
             <div class="btn-group" role="group" aria-label="Large button group">
                 <a href="{% url 'projects' %}" class="btn btn-primary">Return</a>
-                {% if perms.project.change %}
-                    <a href="{% url 'update_project' project.pk %}" class="btn btn-secondary">Edit</a>
-                {% endif %}
-                {% if perms.project.delete %}
-                    <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdropDelete">Delete</a>
-                {% endif %}
-                {% if perms.project.add %}
-                    <a href="{% url 'create_issue' project.pk %}" class="btn btn-success">Add Issue</a>
+                {% if request.user in project.user.all %}
+                    {% if perms.issuetracker.change_project %}
+                        <a href="{% url 'update_project' project.pk %}" class="btn btn-secondary">Edit</a>
+                    {% endif %}
+                    {% if perms.issuetracker.delete_project %}
+                        <a class="btn btn-danger" data-bs-toggle="modal"
+                           data-bs-target="#staticBackdropDelete">Delete</a>
+                    {% endif %}
+                    {% if perms.issuetracker.add_project %}
+                        <a href="{% url 'create_issue' project.pk %}" class="btn btn-success">Add Issue</a>
+                    {% endif %}
                 {% endif %}
             </div>
         {% endif %}
